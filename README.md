@@ -18,6 +18,7 @@ revision loops, contribution records, payment status, and reputation signals.
 - Typed API client/query foundation: `src/api`.
 - Responsive QA coverage: `tests/visual/app-smoke.spec.ts`.
 - Manual review screenshots: `artifacts/manual-end-to-end-handoff`.
+- Redacted live API drill report: `artifacts/api-drill`.
 
 The frontend engineer should treat the coded screens as a product and design
 reference, then rebuild the production app with proper routes, real data
@@ -31,6 +32,7 @@ The left navigation contains these handoff screens:
 - Admin Dashboard.
 - People & Access.
 - Product Map.
+- API Demo.
 - Project Setup.
 - Task Queue.
 - Contributor Dashboard.
@@ -43,6 +45,27 @@ The left navigation contains these handoff screens:
 
 The theme switch in the top bar toggles light and dark modes. Both modes are
 part of the handoff and should influence the final token system.
+
+## Monday API Demo
+
+The `API Demo` screen exists for team walkthroughs before the full frontend is
+built. It has two modes:
+
+- `Evidence Replay` explains the WS-POL-001-16 live API drill from project setup
+  through `review_pending` using privacy-redacted facts from the report.
+- `Live API` lets a presenter point the browser at a running backend, paste a
+  Flow-compatible bearer token, fill known ids, select an API step, edit the
+  request JSON, and run the request directly.
+
+Start with `Evidence Replay` if the backend is not running. Use `Live API` when
+the backend is available at `http://127.0.0.1:8000` or another local URL.
+
+The underlying redacted drill artifacts are included at:
+
+```text
+artifacts/api-drill/WS-POL-001-16-live-api-drill-report.md
+artifacts/api-drill/WS-POL-001-16-live-api-drill-report.pdf
+```
 
 ## Product Language
 

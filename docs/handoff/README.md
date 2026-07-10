@@ -21,6 +21,7 @@ product behavior already expressed in the studio.
 - API client/query helpers: `../../src/api`
 - Visual tests: `../../tests/visual/app-smoke.spec.ts`
 - Manual screenshots: `../../artifacts/manual-end-to-end-handoff`
+- Redacted API drill report: `../../artifacts/api-drill`
 
 ## Handoff Rule
 

@@ -1539,6 +1539,263 @@
   color: var(--color-subtle);
 }
 
+.api-demo-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: 18px;
+}
+
+.api-demo-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.api-demo-mode-band {
+  display: grid;
+  gap: 14px;
+}
+
+.api-mode-toggle {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.api-demo-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  gap: 16px;
+}
+
+.api-demo-audit-band {
+  grid-column: 1 / -1;
+}
+
+.api-demo-side-panel {
+  min-width: 0;
+}
+
+.api-proof-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.api-proof-list div {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-panel);
+  padding: 10px;
+}
+
+.api-proof-list span {
+  grid-row: span 2;
+  color: var(--color-table-heading);
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.api-proof-list strong {
+  min-width: 0;
+  color: var(--color-heading);
+  overflow-wrap: anywhere;
+}
+
+.api-proof-list p {
+  min-width: 0;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.api-demo-live-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.75fr) minmax(320px, 1fr);
+  gap: 16px;
+}
+
+.api-live-config,
+.api-step-list-band,
+.api-request-panel,
+.api-response-panel {
+  min-width: 0;
+}
+
+.api-request-panel,
+.api-response-panel {
+  grid-column: 1 / -1;
+}
+
+.api-live-config {
+  align-content: start;
+  display: grid;
+  gap: 12px;
+}
+
+.api-id-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.api-input-row,
+.api-body-editor {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.api-input-row span,
+.api-body-editor span {
+  color: var(--color-table-heading);
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.api-input-row input,
+.api-body-editor textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--color-control-border);
+  border-radius: 7px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.api-input-row input {
+  height: 38px;
+  padding: 0 10px;
+}
+
+.api-body-editor textarea {
+  min-height: 220px;
+  resize: vertical;
+  padding: 12px;
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.api-body-editor textarea:disabled {
+  background: var(--color-panel-muted);
+  color: var(--color-subtle);
+}
+
+.api-step-list {
+  display: grid;
+  max-height: 510px;
+  gap: 8px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.api-step-button {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 2px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-panel);
+  color: var(--color-text);
+  padding: 10px;
+  text-align: left;
+}
+
+.api-step-button:hover {
+  border-color: var(--color-nav-hover-border);
+  background: var(--color-control-hover);
+}
+
+.api-step-button--active {
+  border-color: var(--color-nav-active-border);
+  background: var(--color-control-active);
+}
+
+.api-step-button span {
+  grid-row: span 2;
+  color: var(--color-table-heading);
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.api-step-button strong {
+  min-width: 0;
+  color: var(--color-heading);
+  font-size: 0.88rem;
+  overflow-wrap: anywhere;
+}
+
+.api-step-button small {
+  min-width: 0;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  overflow-wrap: anywhere;
+}
+
+.api-request-meta {
+  margin-top: 12px;
+}
+
+.api-run-bar {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.api-run-bar span,
+.api-run-note {
+  min-width: 0;
+  color: var(--color-muted);
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.api-response-box {
+  width: 100%;
+  min-height: 320px;
+  max-height: 560px;
+  margin: 12px 0 0;
+  overflow: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-panel-muted);
+  color: var(--color-text);
+  padding: 12px;
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.api-run-note {
+  margin: 10px 0 0;
+}
+
 .step-index,
 .mono,
 code {
@@ -3239,7 +3496,10 @@ code {
   .records-command-layout,
   .revision-command-layout,
   .setup-screen .setup-layout,
-  .setup-layout {
+  .setup-layout,
+  .api-demo-hero,
+  .api-demo-layout,
+  .api-demo-live-grid {
     grid-template-columns: 1fr;
   }
 
@@ -3349,6 +3609,8 @@ code {
   }
 
   .principle-grid,
+  .api-demo-metrics,
+  .api-id-grid,
   .admin-metric-grid,
   .people-metric-grid,
   .queue-metric-grid,
@@ -3446,6 +3708,10 @@ code {
     overflow-x: visible;
   }
 
+  .api-demo-screen .table-wrap {
+    overflow-x: visible;
+  }
+
   .people-screen .data-table,
   .people-screen .data-table tbody,
   .people-screen .data-table tr,
@@ -3477,7 +3743,11 @@ code {
   .revision-screen .data-table,
   .revision-screen .data-table tbody,
   .revision-screen .data-table tr,
-  .revision-screen .data-table td {
+  .revision-screen .data-table td,
+  .api-demo-screen .data-table,
+  .api-demo-screen .data-table tbody,
+  .api-demo-screen .data-table tr,
+  .api-demo-screen .data-table td {
     display: block;
   }
 
@@ -3488,7 +3758,8 @@ code {
   .checks-screen .data-table,
   .review-ops-screen .data-table,
   .records-screen .data-table,
-  .revision-screen .data-table {
+  .revision-screen .data-table,
+  .api-demo-screen .data-table {
     min-width: 0;
     margin-top: 12px;
   }
@@ -3500,7 +3771,8 @@ code {
   .checks-screen .data-table thead,
   .review-ops-screen .data-table thead,
   .records-screen .data-table thead,
-  .revision-screen .data-table thead {
+  .revision-screen .data-table thead,
+  .api-demo-screen .data-table thead {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -3516,7 +3788,8 @@ code {
   .checks-screen .data-table tbody,
   .review-ops-screen .data-table tbody,
   .records-screen .data-table tbody,
-  .revision-screen .data-table tbody {
+  .revision-screen .data-table tbody,
+  .api-demo-screen .data-table tbody {
     display: grid;
     gap: 8px;
   }
@@ -3528,7 +3801,8 @@ code {
   .checks-screen .data-table tr,
   .review-ops-screen .data-table tr,
   .records-screen .data-table tr,
-  .revision-screen .data-table tr {
+  .revision-screen .data-table tr,
+  .api-demo-screen .data-table tr {
     border: 1px solid var(--color-border);
     border-radius: 7px;
     background: var(--color-panel);
@@ -3542,7 +3816,8 @@ code {
   .checks-screen .data-table td,
   .review-ops-screen .data-table td,
   .records-screen .data-table td,
-  .revision-screen .data-table td {
+  .revision-screen .data-table td,
+  .api-demo-screen .data-table td {
     display: grid;
     grid-template-columns: minmax(96px, 0.42fr) minmax(0, 1fr);
     gap: 9px;
@@ -3567,7 +3842,8 @@ code {
   .checks-screen .data-table td::before,
   .review-ops-screen .data-table td::before,
   .records-screen .data-table td::before,
-  .revision-screen .data-table td::before {
+  .revision-screen .data-table td::before,
+  .api-demo-screen .data-table td::before {
     content: attr(data-label);
     color: var(--color-table-heading);
     font-family:
@@ -3585,8 +3861,13 @@ code {
   .checks-screen .data-table td:last-child,
   .review-ops-screen .data-table td:last-child,
   .records-screen .data-table td:last-child,
-  .revision-screen .data-table td:last-child {
+  .revision-screen .data-table td:last-child,
+  .api-demo-screen .data-table td:last-child {
     border-bottom: 0;
+  }
+
+  .api-run-bar {
+    display: grid;
   }
 
   .screen-band {

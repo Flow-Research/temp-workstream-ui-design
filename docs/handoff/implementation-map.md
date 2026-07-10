@@ -9,6 +9,7 @@ Recommended route structure:
 | `/`                                 | Admin Dashboard or role-aware home           |
 | `/people`                           | People And Access                            |
 | `/product-map`                      | Product Map or internal runbook during build |
+| `/api-demo`                         | Temporary API drill demo harness             |
 | `/projects/:projectId/setup`        | Project Setup                                |
 | `/projects/:projectId/tasks`        | Task Queue                                   |
 | `/contributor`                      | Contributor Dashboard                        |
@@ -104,6 +105,10 @@ src/routes
 
 Do not keep all screens in one production `App.tsx`. The current one-file
 studio is acceptable for design review, not for the final frontend.
+
+The `API Demo` screen is a temporary bridge for demos and backend probing. Keep
+or remove it in production based on internal tooling needs; do not let it become
+the main user workflow.
 
 ## API Integration Rules
 

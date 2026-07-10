@@ -24,12 +24,25 @@ import {
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import "./App.css";
+import {
+  apiDemoDefaultIds,
+  apiDrillAuditRows,
+  apiDrillControls,
+  apiDrillReplayRows,
+  apiDrillSteps,
+  formatApiDrillRequestBody,
+  resolveApiDemoPath,
+  type ApiDemoIdState,
+  type ApiDemoMode,
+  type ApiDrillStep,
+} from "./apiDrillDemo";
 
 type Tone = "neutral" | "info" | "success" | "warning" | "danger";
 type ScreenKey =
   | "admin"
   | "people"
   | "map"
+  | "apiDemo"
   | "setup"
   | "queue"
   | "contributor"
@@ -2356,6 +2369,13 @@ const screens: Array<{
     icon: GitBranch,
   },
   {
+    key: "apiDemo",
+    label: "API Demo",
+    description:
+      "Monday demo harness for replaying and probing the live API drill.",
+    icon: Search,
+  },
+  {
     key: "setup",
     label: "Project Setup",
     description: "Guide, sufficiency, and policy activation.",
@@ -2497,6 +2517,7 @@ function App() {
         )}
         {activeScreen === "people" && <PeopleAccessScreen />}
         {activeScreen === "map" && <ProductMapScreen />}
+        {activeScreen === "apiDemo" && <ApiDemoScreen />}
         {activeScreen === "setup" && <ProjectSetupScreen />}
         {activeScreen === "queue" && <TaskQueueScreen />}
         {activeScreen === "contributor" && <ContributorDashboardScreen />}
@@ -2965,6 +2986,383 @@ function ProductMapScreen() {
           rows={productHandoffRows}
         />
       </section>
+    </div>
+  );
+}
+
+type ApiRunState = {
+  status: "idle" | "running" | "ok" | "error";
+  httpStatus?: number;
+  body?: string;
+  error?: string;
+  completedAt?: string;
+};
+
+function ApiDemoScreen() {
+  const [mode, setMode] = useState<ApiDemoMode>("evidence");
+  const [baseUrl, setBaseUrl] = useState("http://127.0.0.1:8000");
+  const [bearerToken, setBearerToken] = useState("");
+  const [ids, setIds] = useState<ApiDemoIdState>(apiDemoDefaultIds);
+  const [selectedStepId, setSelectedStepId] = useState(apiDrillSteps[0].id);
+  const [requestBody, setRequestBody] = useState(
+    formatApiDrillRequestBody(apiDrillSteps[0].id),
+  );
+  const [runState, setRunState] = useState<ApiRunState>({ status: "idle" });
+
+  const selectedStep =
+    apiDrillSteps.find((step) => step.id === selectedStepId) ??
+    apiDrillSteps[0];
+  const resolvedPath = resolveApiDemoPath(selectedStep.path, ids);
+  const selectedStepHasBody =
+    selectedStep.method === "POST" || selectedStep.method === "PATCH";
+  const requestPreview = requestBody.trim() || "No request body";
+
+  function selectStep(step: ApiDrillStep) {
+    setSelectedStepId(step.id);
+    setRequestBody(formatApiDrillRequestBody(step.id));
+    setRunState({ status: "idle" });
+  }
+
+  function updateId(key: keyof ApiDemoIdState, value: string) {
+    setIds((current) => ({ ...current, [key]: value }));
+  }
+
+  async function runSelectedStep() {
+    const normalizedBaseUrl = baseUrl.replace(/\/+$/, "");
+    const requestUrl = `${normalizedBaseUrl}${resolvedPath}`;
+    const headers: Record<string, string> = {
+      Accept: "application/json",
+    };
+    const trimmedToken = bearerToken.trim();
+    if (trimmedToken) {
+      headers.Authorization = trimmedToken.startsWith("Bearer ")
+        ? trimmedToken
+        : `Bearer ${trimmedToken}`;
+    }
+
+    let body: string | undefined;
+    if (selectedStepHasBody && requestBody.trim()) {
+      try {
+        body = JSON.stringify(JSON.parse(requestBody));
+      } catch (error) {
+        setRunState({
+          status: "error",
+          error:
+            error instanceof Error
+              ? `Request JSON is invalid: ${error.message}`
+              : "Request JSON is invalid.",
+          completedAt: new Date().toLocaleTimeString(),
+        });
+        return;
+      }
+      headers["Content-Type"] = "application/json";
+    }
+
+    setRunState({ status: "running" });
+    try {
+      const response = await fetch(requestUrl, {
+        body,
+        headers,
+        method: selectedStep.method,
+      });
+      const responseText = await response.text();
+      let formattedBody = responseText || "(empty response body)";
+      try {
+        formattedBody = JSON.stringify(JSON.parse(responseText), null, 2);
+      } catch {
+        // Keep non-JSON responses readable.
+      }
+      setRunState({
+        status: response.ok ? "ok" : "error",
+        httpStatus: response.status,
+        body: formattedBody,
+        completedAt: new Date().toLocaleTimeString(),
+      });
+    } catch (error) {
+      setRunState({
+        status: "error",
+        error:
+          error instanceof Error
+            ? error.message
+            : "The browser could not reach the backend.",
+        completedAt: new Date().toLocaleTimeString(),
+      });
+    }
+  }
+
+  return (
+    <div className="screen-stack api-demo-screen">
+      <section className="screen-band api-demo-hero">
+        <div className="band-heading">
+          <p className="eyebrow">Monday demo harness</p>
+          <h2>Replay the proven API drill, then probe a running backend</h2>
+          <p>
+            This is a basic UI for the team demo: it explains the live drill,
+            preserves the redacted evidence, and lets a presenter run selected
+            HTTP calls against a local Workstream backend without building the
+            full production frontend.
+          </p>
+        </div>
+        <div className="api-demo-metrics" aria-label="API demo proof points">
+          <Metric
+            label="drill result"
+            value="PASS"
+            detail="WS-POL-001-16 live API proof"
+          />
+          <Metric
+            label="final state"
+            value="review_pending"
+            detail="durable checker gate allowed review"
+          />
+          <Metric
+            label="blocked path"
+            value="422"
+            detail="pre_submission_checker_failed"
+          />
+          <Metric
+            label="runner"
+            value="live"
+            detail="base URL, bearer token, editable JSON"
+          />
+        </div>
+      </section>
+
+      <section className="screen-band api-demo-mode-band">
+        <div className="section-title-row">
+          <div>
+            <p className="eyebrow">Demo mode</p>
+            <h2>Use replay for the story, live mode for backend proof</h2>
+          </div>
+          <div
+            className="api-mode-toggle"
+            role="group"
+            aria-label="API demo mode"
+          >
+            <button
+              className={
+                mode === "evidence"
+                  ? "command-button primary"
+                  : "command-button"
+              }
+              onClick={() => setMode("evidence")}
+              type="button"
+            >
+              Evidence Replay
+            </button>
+            <button
+              className={
+                mode === "live" ? "command-button primary" : "command-button"
+              }
+              onClick={() => setMode("live")}
+              type="button"
+            >
+              Live API
+            </button>
+          </div>
+        </div>
+        <DataTable
+          columns={["control", "observed result", "demo point"]}
+          rows={apiDrillControls}
+        />
+      </section>
+
+      {mode === "evidence" ? (
+        <section className="api-demo-layout">
+          <div className="screen-band">
+            <div className="band-heading compact">
+              <p className="eyebrow">Evidence replay</p>
+              <h2>Privacy-redacted drill story for the Monday walkthrough</h2>
+            </div>
+            <DataTable
+              columns={["step", "object", "state", "proof"]}
+              rows={apiDrillReplayRows}
+            />
+          </div>
+
+          <aside className="decision-panel api-demo-side-panel">
+            <p className="eyebrow">Presenter script</p>
+            <h2>
+              The important proof is not the fixture; it is the state chain
+            </h2>
+            <p>
+              Walk the team from guide setup to task lock, then show why a
+              blocked packet creates no submission before ending at
+              review_pending after finalization and durable checker execution.
+            </p>
+            <div className="api-proof-list">
+              <div>
+                <span>01</span>
+                <strong>Setup is visible</strong>
+                <p>
+                  Setup run, sufficiency, policy, effective policy, checker.
+                </p>
+              </div>
+              <div>
+                <span>02</span>
+                <strong>Pre-submit is not review</strong>
+                <p>It returns checker feedback, not accept or reject.</p>
+              </div>
+              <div>
+                <span>03</span>
+                <strong>Finalization is the durable gate</strong>
+                <p>Checker run is persisted and routes to review_pending.</p>
+              </div>
+            </div>
+          </aside>
+
+          <div className="screen-band api-demo-audit-band">
+            <div className="band-heading compact">
+              <p className="eyebrow">Audit proof</p>
+              <h2>Blocked create and final checker gate stay traceable</h2>
+            </div>
+            <DataTable
+              columns={["event", "from", "to"]}
+              rows={apiDrillAuditRows}
+            />
+          </div>
+        </section>
+      ) : (
+        <section className="api-demo-live-grid">
+          <div className="screen-band api-live-config">
+            <div className="band-heading compact">
+              <p className="eyebrow">Connection</p>
+              <h2>Point the runner at a local backend</h2>
+            </div>
+            <label className="api-input-row">
+              <span>Backend URL</span>
+              <input
+                onChange={(event) => setBaseUrl(event.target.value)}
+                value={baseUrl}
+              />
+            </label>
+            <label className="api-input-row">
+              <span>Bearer token</span>
+              <input
+                autoComplete="off"
+                onChange={(event) => setBearerToken(event.target.value)}
+                placeholder="Paste Flow-compatible token for protected calls"
+                type="password"
+                value={bearerToken}
+              />
+            </label>
+            <div className="api-id-grid">
+              {(Object.keys(ids) as Array<keyof ApiDemoIdState>).map((key) => (
+                <label className="api-input-row" key={key}>
+                  <span>{key}</span>
+                  <input
+                    onChange={(event) => updateId(key, event.target.value)}
+                    value={ids[key]}
+                  />
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="screen-band api-step-list-band">
+            <div className="band-heading compact">
+              <p className="eyebrow">API sequence</p>
+              <h2>Select a step from the live drill</h2>
+            </div>
+            <div className="api-step-list">
+              {apiDrillSteps.map((step) => (
+                <button
+                  aria-pressed={selectedStep.id === step.id}
+                  className={
+                    selectedStep.id === step.id
+                      ? "api-step-button api-step-button--active"
+                      : "api-step-button"
+                  }
+                  key={step.id}
+                  onClick={() => selectStep(step)}
+                  type="button"
+                >
+                  <span>{step.step}</span>
+                  <strong>{step.operation}</strong>
+                  <small>
+                    {step.method} · {step.expected} · {step.phase}
+                  </small>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="screen-band api-request-panel">
+            <div className="section-title-row">
+              <div>
+                <p className="eyebrow">Selected request</p>
+                <h2>{selectedStep.operation}</h2>
+              </div>
+              <StatusBadge
+                tone={selectedStep.method === "GET" ? "info" : "warning"}
+              >
+                {selectedStep.method}
+              </StatusBadge>
+            </div>
+            <dl className="field-grid api-request-meta">
+              <Field label="actor" value={selectedStep.actor} />
+              <Field label="expected_http" value={selectedStep.expected} mono />
+              <Field label="path" value={resolvedPath} mono />
+              <Field label="purpose" value={selectedStep.summary} />
+            </dl>
+            <label className="api-body-editor">
+              <span>Request JSON</span>
+              <textarea
+                disabled={!selectedStepHasBody}
+                onChange={(event) => setRequestBody(event.target.value)}
+                spellCheck={false}
+                value={requestBody}
+              />
+            </label>
+            <div className="api-run-bar">
+              <button
+                className="command-button primary"
+                disabled={runState.status === "running"}
+                onClick={runSelectedStep}
+                type="button"
+              >
+                <Send aria-hidden="true" size={15} />
+                {runState.status === "running" ? "Running" : "Run Step"}
+              </button>
+              <span>
+                {baseUrl.replace(/\/+$/, "")}
+                {resolvedPath}
+              </span>
+            </div>
+          </div>
+
+          <div className="screen-band api-response-panel">
+            <div className="section-title-row">
+              <div>
+                <p className="eyebrow">Response</p>
+                <h2>Formatted output for the demo</h2>
+              </div>
+              <StatusBadge
+                tone={
+                  runState.status === "ok"
+                    ? "success"
+                    : runState.status === "error"
+                      ? "danger"
+                      : "neutral"
+                }
+              >
+                {runState.httpStatus
+                  ? `HTTP ${runState.httpStatus}`
+                  : runState.status}
+              </StatusBadge>
+            </div>
+            <pre className="api-response-box">
+              {runState.error ??
+                runState.body ??
+                `Select a step and run it.\n\nCurrent request body preview:\n${requestPreview}`}
+            </pre>
+            {runState.completedAt && (
+              <p className="api-run-note">
+                Last run completed at {runState.completedAt}.
+              </p>
+            )}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

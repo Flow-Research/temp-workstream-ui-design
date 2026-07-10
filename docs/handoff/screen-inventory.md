@@ -83,6 +83,44 @@ Implementation notes:
 - In production this can become an internal help/runbook route or be removed
   from the deployed app. It must remain available during build handoff.
 
+## API Demo
+
+Primary actor: presenter, product owner, backend engineer, frontend engineer.
+
+Job: give the team a small Monday-ready UI for replaying the proven API drill
+and probing a running backend without pretending the full frontend exists.
+
+Primary actions:
+
+- Replay the redacted WS-POL-001-16 evidence.
+- Switch to live API mode.
+- Configure backend URL and bearer token.
+- Fill known project, guide, report, policy, task, submission, and checker-run
+  ids.
+- Select an API step.
+- Edit request JSON.
+- Run the request and inspect formatted response output.
+
+Visible gates:
+
+- Backend health.
+- Current actor token acceptance.
+- Setup run status.
+- Policy/checker visibility.
+- Task locked context.
+- Pre-submit blocked path.
+- Successful submission create/finalize path.
+- Durable checker run and final audit trail.
+
+Implementation notes:
+
+- Treat this as a demo and test harness, not the production frontend route
+  architecture.
+- Do not persist bearer tokens in browser storage.
+- Evidence replay must work even when the backend is unavailable.
+- Live mode needs a running backend and a Flow-compatible token for protected
+  calls.
+
 ## Project Setup
 
 Primary actor: admin, project_manager.
