@@ -83,23 +83,24 @@ Implementation notes:
 - In production this can become an internal help/runbook route or be removed
   from the deployed app. It must remain available during build handoff.
 
-## API Demo
+## API Workbench
 
 Primary actor: presenter, product owner, backend engineer, frontend engineer.
 
-Job: give the team a small Monday-ready UI for replaying the proven API drill
-and probing a running backend without pretending the full frontend exists.
+Job: give the team a small real API UI for creating or selecting any project,
+submitting data to the backend, and inspecting responses without pretending the
+full frontend exists.
 
 Primary actions:
 
-- Replay the redacted WS-POL-001-16 evidence.
-- Switch to live API mode.
-- Configure backend URL and bearer token.
-- Fill known project, guide, report, policy, task, submission, and checker-run
-  ids.
-- Select an API step.
+- Configure backend URL, operator token, and submitter token.
+- Create a project or paste known project, guide, report, policy, task,
+  submission, and checker-run ids.
+- Select a backend action.
 - Edit request JSON.
-- Run the request and inspect formatted response output.
+- Run the selected request or continue the workflow from that action.
+- Inspect formatted backend responses, captured ids, checker output, and audit
+  output.
 
 Visible gates:
 
@@ -114,12 +115,12 @@ Visible gates:
 
 Implementation notes:
 
-- Treat this as a demo and test harness, not the production frontend route
+- Treat this as a real API workbench, not the production frontend route
   architecture.
 - Do not persist bearer tokens in browser storage.
-- Evidence replay must work even when the backend is unavailable.
-- Live mode needs a running backend and a Flow-compatible token for protected
-  calls.
+- It needs a running backend and Flow-compatible tokens for protected calls.
+- Starter request bodies are editable examples; presenters must replace them
+  with the actual project data when needed.
 
 ## Project Setup
 

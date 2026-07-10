@@ -129,7 +129,7 @@ export const apiDrillSteps: ApiDrillStep[] = [
     phase: "auth",
     operation: "Read current actor",
     method: "GET",
-    path: "/api/v1/me",
+    path: "/api/v1/auth/me",
     actor: "Flow token actor",
     expected: "200",
     summary:
@@ -485,37 +485,37 @@ export const apiDrillSteps: ApiDrillStep[] = [
 ];
 
 const blockedSubmissionPacket = {
-  summary: "API demo packet intentionally missing static guard artifact.",
-  package_uri: "local://demo/submissions/blocked-packet.zip",
-  package_hash: "sha256:blocked-demo-packet",
+  summary: "Workbench packet intentionally missing static guard artifact.",
+  package_uri: "local://workbench/submissions/blocked-packet.zip",
+  package_hash: "sha256:blocked-workbench-packet",
   artifact_hash_manifest: [
     {
       artifact: "submission archive",
       hash: "sha256:archive-present",
       size_bytes: 2048,
       notes:
-        "Demo archive present; required static guard output intentionally omitted.",
+        "Workbench archive present; required static guard output intentionally omitted.",
     },
   ],
   worker_attestation:
-    "I confirm this packet excludes secrets and local-only material, but it is intentionally incomplete for the blocked demo.",
+    "I confirm this packet excludes secrets and local-only material, but it is intentionally incomplete for the blocked workbench check.",
   evidence_items: [
     {
       type: "note",
       label: "task configuration",
-      uri: "local://demo/evidence/task-configuration.txt",
-      hash: "sha256:task-config-demo",
+      uri: "local://workbench/evidence/task-configuration.txt",
+      hash: "sha256:task-config-workbench",
       size_bytes: 512,
-      metadata: { demo: true },
+      metadata: { workbench: true },
     },
   ],
 };
 
 const passingSubmissionPacket = {
   summary:
-    "API demo packet with required artifacts, evidence, hashes, and attestation.",
-  package_uri: "local://demo/submissions/passing-packet.zip",
-  package_hash: "sha256:passing-demo-packet",
+    "Workbench packet with required artifacts, evidence, hashes, and attestation.",
+  package_uri: "local://workbench/submissions/passing-packet.zip",
+  package_hash: "sha256:passing-workbench-packet",
   artifact_hash_manifest: [
     {
       artifact: "submission archive",
@@ -542,15 +542,15 @@ const passingSubmissionPacket = {
     {
       type: "note",
       label: "task configuration",
-      uri: "local://demo/evidence/task-configuration.txt",
-      hash: "sha256:task-config-demo",
+      uri: "local://workbench/evidence/task-configuration.txt",
+      hash: "sha256:task-config-workbench",
       size_bytes: 512,
-      metadata: { demo: true },
+      metadata: { workbench: true },
     },
     {
       type: "log",
       label: "platform static guard output",
-      uri: "local://demo/evidence/static-guard.log",
+      uri: "local://workbench/evidence/static-guard.log",
       hash: "sha256:static-guard-present",
       size_bytes: 1024,
       metadata: { checker: "static_guard" },
@@ -558,7 +558,7 @@ const passingSubmissionPacket = {
     {
       type: "test_result",
       label: "verifier execution log A",
-      uri: "local://demo/evidence/verifier-a.log",
+      uri: "local://workbench/evidence/verifier-a.log",
       hash: "sha256:verifier-a",
       size_bytes: 1024,
       metadata: { verifier: "A" },
@@ -568,34 +568,37 @@ const passingSubmissionPacket = {
 
 export function getApiDrillRequestBody(stepId: string) {
   switch (stepId) {
-    case "create-project":
+    case "create-project": {
+      const suffix = Date.now().toString(36);
       return {
-        name: "API Demo Project",
-        slug: "api-demo-project",
-        description: "Monday demo project for the Workstream API drill UI.",
+        name: "Workbench Project",
+        slug: `workbench-project-${suffix}`,
+        description:
+          "Project created from the Workstream API workbench. Replace this with the real project description for the run.",
       };
+    }
     case "create-guide":
       return {
         version: "v1",
         content_markdown:
-          "# API Demo Guide\n\nSubmitter packets must include a manifest, required artifacts, evidence logs, SHA-256 hashes, and human accountability attestation.",
-        change_summary: "Initial API demo guide.",
+          "# Workbench Guide\n\nSubmitter packets must include a manifest, required artifacts, evidence logs, SHA-256 hashes, and human accountability attestation.",
+        change_summary: "Initial workbench guide.",
         source_snapshot: {
           items: [
             {
               source_kind: "project_guide",
-              durable_ref: "public-fixture://api-demo/source-item-1",
+              durable_ref: "public-fixture://workbench/source-item-1",
               ingestion_adapter: "manual",
-              content_hash: "sha256:demo-guide-source",
+              content_hash: "sha256:workbench-guide-source",
               media_type: "text/markdown",
               content_excerpt:
-                "Privacy-safe demo guide source. Replace with real fixture material for a live drill.",
+                "Privacy-safe guide source. Replace with the actual project material for the run.",
             },
             {
               source_kind: "checker_evidence",
-              durable_ref: "public-fixture://api-demo/source-item-2",
+              durable_ref: "public-fixture://workbench/source-item-2",
               ingestion_adapter: "manual",
-              content_hash: "sha256:demo-checker-evidence",
+              content_hash: "sha256:workbench-checker-evidence",
               media_type: "text/plain",
               content_excerpt:
                 "Static guard and verifier evidence are required for accepted packets.",
@@ -627,20 +630,20 @@ export function getApiDrillRequestBody(stepId: string) {
     case "policy-approve":
       return {
         approval_note:
-          "Approved for the Monday API demo. Replace with the exact policy approval note in live testing.",
+          "Approved from the API workbench. Replace with the exact policy approval note for the run.",
       };
     case "create-task":
       return {
-        title: "API Demo Task",
+        title: "Workbench Task",
         description:
           "Prepare a privacy-safe submission packet with required artifacts, evidence, hashes, and attestation.",
         task_type: "submission_packet",
         difficulty: "medium",
-        skill_tags: ["api-demo", "submission", "checker"],
+        skill_tags: ["workbench", "submission", "checker"],
         estimated_time_minutes: 45,
         source_type: "manual",
-        source_ref: "public-fixture://api-demo/task-1",
-        source_payload_hash: "sha256:demo-task-source",
+        source_ref: "public-fixture://workbench/task-1",
+        source_payload_hash: "sha256:workbench-task-source",
         acceptance_criteria:
           "Packet includes archive, static guard output, review packet, evidence logs, SHA-256 hashes, and attestation.",
         rejection_criteria:
@@ -651,11 +654,11 @@ export function getApiDrillRequestBody(stepId: string) {
     case "claim-task":
     case "start-task":
       return {
-        reason: "Monday API demo lifecycle step.",
+        reason: "API workbench lifecycle step.",
       };
     case "activate-profile":
       return {
-        skill_tags: ["api-demo", "submission-packet", "checker-evidence"],
+        skill_tags: ["workbench", "submission-packet", "checker-evidence"],
       };
     case "precheck-blocked":
       return {

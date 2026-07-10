@@ -7,7 +7,7 @@ test("renders the coded design studio", () => {
   expect(screen.getAllByText("Admin Dashboard")[0]).toBeVisible();
   expect(screen.getAllByText("People & Access")[0]).toBeVisible();
   expect(screen.getAllByText("Product Map")[0]).toBeVisible();
-  expect(screen.getByText("API Demo")).toBeVisible();
+  expect(screen.getByText("API Workbench")).toBeVisible();
   expect(screen.getByText("Contributor Dashboard")).toBeVisible();
   expect(screen.getByText("Submitter Workspace")).toBeVisible();
   expect(screen.getByText("Checks Monitor")).toBeVisible();
@@ -73,21 +73,17 @@ test("renders the product handoff map", () => {
   expect(screen.queryByText(/Claude ZIP/i)).toBeNull();
 }, 20_000);
 
-test("renders the API drill demo harness", () => {
+test("renders the real API workbench", () => {
   render(<App />);
-  fireEvent.click(screen.getByRole("button", { name: "API Demo" }));
+  fireEvent.click(screen.getByRole("button", { name: "API Workbench" }));
   expect(
-    screen.getByText(
-      "Replay the proven API drill, then probe a running backend",
-    ),
+    screen.getByText("Input, submit, and inspect Workstream backend data"),
   ).toBeVisible();
-  expect(screen.getByText("Evidence replay")).toBeVisible();
-  expect(screen.getByText("pre_submission_checker_failed")).toBeVisible();
-
-  fireEvent.click(screen.getByRole("button", { name: "Live API" }));
-  expect(screen.getByText("Point the runner at a local backend")).toBeVisible();
+  expect(screen.getByText("Backend and role tokens")).toBeVisible();
+  expect(screen.getByText("Runtime ids")).toBeVisible();
   expect(screen.getAllByText("Check backend health")[0]).toBeVisible();
-  expect(screen.getByText("Run Step")).toBeVisible();
+  expect(screen.getByText("Run Selected")).toBeVisible();
+  expect(screen.getByText("Run Workflow From Here")).toBeVisible();
 }, 20_000);
 
 test("renders the task release console", () => {

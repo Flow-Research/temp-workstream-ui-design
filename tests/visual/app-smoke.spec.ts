@@ -63,23 +63,22 @@ test("product map screen renders without overflow or accessibility violations", 
   await expectNoA11yViolations(page);
 });
 
-test("API demo screen renders without overflow or accessibility violations", async ({
+test("API workbench screen renders without overflow or accessibility violations", async ({
   page,
 }) => {
   test.setTimeout(240_000);
   await page.goto("/", { waitUntil: "networkidle" });
   await expect(page.locator("#root")).toBeVisible();
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
-  await page.getByRole("button", { name: "API Demo" }).click();
+  await page.getByRole("button", { name: "API Workbench" }).click();
   await expect(
-    page.getByRole("heading", { exact: true, name: "API Demo" }),
+    page.getByRole("heading", { exact: true, name: "API Workbench" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Replay the proven API drill, then probe a running backend"),
+    page.getByText("Input, submit, and inspect Workstream backend data"),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Live API" }).click();
   await expect(
-    page.getByText("Point the runner at a local backend"),
+    page.getByText("Select the real operation you want to run"),
   ).toBeVisible();
   await expectNoHorizontalOverflow(page);
   await expectNoA11yViolations(page);

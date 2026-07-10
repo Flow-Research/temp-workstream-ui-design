@@ -32,7 +32,7 @@ The left navigation contains these handoff screens:
 - Admin Dashboard.
 - People & Access.
 - Product Map.
-- API Demo.
+- API Workbench.
 - Project Setup.
 - Task Queue.
 - Contributor Dashboard.
@@ -46,26 +46,50 @@ The left navigation contains these handoff screens:
 The theme switch in the top bar toggles light and dark modes. Both modes are
 part of the handoff and should influence the final token system.
 
-## Monday API Demo
+## Real API Workbench
 
-The `API Demo` screen exists for team walkthroughs before the full frontend is
-built. It has two modes:
+The `API Workbench` screen exists for live backend testing before the full
+frontend is built. It is not a replay screen and it is not tied to one project.
+Use it with whichever project the team decides to exercise at demo time.
 
-- `Evidence Replay` explains the WS-POL-001-16 live API drill from project setup
-  through `review_pending` using privacy-redacted facts from the report.
-- `Live API` lets a presenter point the browser at a running backend, paste a
-  Flow-compatible bearer token, fill known ids, select an API step, edit the
-  request JSON, and run the request directly.
+The workbench lets a presenter:
 
-Start with `Evidence Replay` if the backend is not running. Use `Live API` when
-the backend is available at `http://127.0.0.1:8000` or another local URL.
+- Point the browser at a running backend, or leave the backend URL blank to use
+  the Vite proxy.
+- Paste separate operator and submitter Flow-compatible bearer tokens.
+- Create a project through the API or paste existing project/guide/task ids.
+- Edit request JSON for guide setup, task release, pre-submit checks,
+  submission creation, finalization, checker runs, audit, and final task state.
+- Run one selected endpoint or continue the workflow from the selected action.
+- Inspect real backend responses and captured ids.
 
-The underlying redacted drill artifacts are included at:
+The underlying redacted drill artifacts are kept only as historical backend
+evidence:
 
 ```text
 artifacts/api-drill/WS-POL-001-16-live-api-drill-report.md
 artifacts/api-drill/WS-POL-001-16-live-api-drill-report.pdf
 ```
+
+For local development, Vite proxies `/api` and `/health` to
+`http://127.0.0.1:8000`. Start the backend separately, then run:
+
+```text
+npm run dev
+```
+
+For a local Flow-token backend, make sure the backend uses matching local auth
+settings. This repo includes a helper that prints an operator token and a
+submitter token:
+
+```bash
+npm run tokens:local
+```
+
+The helper output includes the backend environment values it used. The backend
+must use the same `WORKSTREAM_FLOW_AUTH_ISSUER`,
+`WORKSTREAM_FLOW_AUTH_AUDIENCE`, and
+`WORKSTREAM_FLOW_AUTH_LOCAL_HMAC_SECRET` values for those tokens to verify.
 
 ## Product Language
 

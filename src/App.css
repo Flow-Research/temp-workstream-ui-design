@@ -1630,8 +1630,10 @@
   min-width: 0;
 }
 
+.api-step-list-band,
 .api-request-panel,
-.api-response-panel {
+.api-response-panel,
+.api-result-table-band {
   grid-column: 1 / -1;
 }
 
@@ -1645,6 +1647,50 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
+}
+
+.api-token-grid,
+.api-workbench-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.api-run-option {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.api-run-option input {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  accent-color: var(--color-nav-active-border);
+}
+
+.api-capture-log {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.api-capture-log span {
+  max-width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-panel);
+  color: var(--color-muted);
+  padding: 5px 8px;
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.68rem;
+  overflow-wrap: anywhere;
 }
 
 .api-input-row,
@@ -1697,10 +1743,36 @@
 
 .api-step-list {
   display: grid;
-  max-height: 510px;
   gap: 8px;
-  overflow: auto;
   padding-right: 4px;
+}
+
+.api-action-groups {
+  display: grid;
+  gap: 12px;
+}
+
+.api-action-group {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-panel-muted);
+  padding: 12px;
+}
+
+.api-action-group h3 {
+  margin: 0;
+  color: var(--color-heading);
+  font-size: 0.94rem;
+  line-height: 1.3;
+}
+
+.api-action-group p {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
 }
 
 .api-step-button {
@@ -1727,7 +1799,7 @@
   background: var(--color-control-active);
 }
 
-.api-step-button span {
+.api-step-button .api-step-index {
   grid-row: span 2;
   color: var(--color-table-heading);
   font-family:
@@ -1748,6 +1820,12 @@
   color: var(--color-muted);
   font-size: 0.76rem;
   overflow-wrap: anywhere;
+}
+
+.api-step-button .status-badge {
+  grid-column: 2;
+  justify-self: start;
+  margin-top: 3px;
 }
 
 .api-request-meta {
@@ -3611,6 +3689,8 @@ code {
   .principle-grid,
   .api-demo-metrics,
   .api-id-grid,
+  .api-token-grid,
+  .api-workbench-controls,
   .admin-metric-grid,
   .people-metric-grid,
   .queue-metric-grid,
