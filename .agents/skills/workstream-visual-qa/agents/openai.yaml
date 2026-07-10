@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workstream Visual QA"
+  short_description: "Verify UI screenshots and a11y"
+  default_prompt: "Use this skill before reporting Workstream frontend UI work as complete."

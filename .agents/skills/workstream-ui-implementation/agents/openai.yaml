@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workstream UI Implementation"
+  short_description: "Implement Workstream React UI"
+  default_prompt: "Use this skill when implementing Workstream frontend code."

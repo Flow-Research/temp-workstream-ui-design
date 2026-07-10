@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workstream Design System"
+  short_description: "Define Workstream UI foundations"
+  default_prompt: "Use this skill before designing Workstream UI screens or components."

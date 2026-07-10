@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workstream API Contracts"
+  short_description: "Map backend contracts to UI"
+  default_prompt: "Use this skill when connecting the frontend to Workstream backend APIs."

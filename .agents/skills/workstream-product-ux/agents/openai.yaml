@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workstream Product UX"
+  short_description: "Plan Workstream frontend UX"
+  default_prompt: "Use this skill to plan Workstream frontend flows and screen inventory before implementation."

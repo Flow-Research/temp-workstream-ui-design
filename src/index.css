@@ -1,0 +1,144 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+
+:root {
+  --color-canvas: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-sidebar: #ffffff;
+  --color-panel: #fbfcfd;
+  --color-panel-muted: #f8fafc;
+  --color-panel-soft: #f7fafc;
+  --color-text: #1f2933;
+  --color-heading: #111827;
+  --color-muted: #4b5563;
+  --color-muted-strong: #667589;
+  --color-subtle: #607086;
+  --color-icon: #42566d;
+  --color-eyebrow: #637184;
+  --color-border: #d8dee6;
+  --color-border-strong: #aeb8c5;
+  --color-control: #eef2f6;
+  --color-control-border: #b8c4d2;
+  --color-control-hover: #f4f7fa;
+  --color-control-active: #e9f1f7;
+  --color-focus: #2563eb;
+  --color-success: #15803d;
+  --color-primary: #0f5a7a;
+  --color-on-primary: #ffffff;
+  --color-brand-border: #b8c3d0;
+  --color-brand-bg: #f2f5f8;
+  --color-brand-text: #143b52;
+  --color-nav-text: #526170;
+  --color-nav-hover-border: #d4dae3;
+  --color-nav-active-border: #b8c8d8;
+  --color-nav-active-text: #123b56;
+  --color-list-accent: #7897aa;
+  --color-table-heading: #526176;
+  --color-chip-border: #c8d3df;
+  --status-neutral-border: #cad2dd;
+  --status-neutral-bg: #f4f6f8;
+  --status-neutral-text: #475569;
+  --status-info-border: #a7c6da;
+  --status-info-bg: #eef7fb;
+  --status-info-text: #0f5a7a;
+  --status-success-border: #9fd0b2;
+  --status-success-bg: #effaf3;
+  --status-success-text: #12613a;
+  --status-warning-border: #ddc68d;
+  --status-warning-bg: #fff8e9;
+  --status-warning-text: #7a520d;
+  --status-danger-border: #e8ada5;
+  --status-danger-bg: #fff1ef;
+  --status-danger-text: #9f2d20;
+  color-scheme: light;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  color: var(--color-text);
+  background: var(--color-canvas);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.studio-shell[data-theme="dark"] {
+  --color-canvas: #0f1419;
+  --color-surface: #151b21;
+  --color-sidebar: #111820;
+  --color-panel: #182128;
+  --color-panel-muted: #121a20;
+  --color-panel-soft: #162028;
+  --color-text: #d6dee8;
+  --color-heading: #f4f7fb;
+  --color-muted: #9caaba;
+  --color-muted-strong: #a9b6c5;
+  --color-subtle: #9aaaae;
+  --color-icon: #aebac8;
+  --color-eyebrow: #91a2b5;
+  --color-border: #2b3743;
+  --color-border-strong: #435261;
+  --color-control: #1d2730;
+  --color-control-border: #465565;
+  --color-control-hover: #1d2a34;
+  --color-control-active: #183242;
+  --color-focus: #60a5fa;
+  --color-success: #7dd69a;
+  --color-primary: #227b99;
+  --color-on-primary: #f8fbfd;
+  --color-brand-border: #425569;
+  --color-brand-bg: #17242d;
+  --color-brand-text: #d8ecf5;
+  --color-nav-text: #b2bfce;
+  --color-nav-hover-border: #3a4a59;
+  --color-nav-active-border: #426176;
+  --color-nav-active-text: #d7eef8;
+  --color-list-accent: #6b94aa;
+  --color-table-heading: #aab8c8;
+  --color-chip-border: #445464;
+  --status-neutral-border: #4a5563;
+  --status-neutral-bg: #202832;
+  --status-neutral-text: #d0dae5;
+  --status-info-border: #376178;
+  --status-info-bg: #12242d;
+  --status-info-text: #a6d9ee;
+  --status-success-border: #356948;
+  --status-success-bg: #13241a;
+  --status-success-text: #a8e7bb;
+  --status-warning-border: #746035;
+  --status-warning-bg: #281f10;
+  --status-warning-text: #ecd18b;
+  --status-danger-border: #7c403a;
+  --status-danger-bg: #2a1716;
+  --status-danger-text: #f0b7b2;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: var(--color-canvas);
+}
+
+button {
+  cursor: pointer;
+}
+
+code {
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+}

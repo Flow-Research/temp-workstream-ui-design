@@ -1,0 +1,34 @@
+# Project-scoped MCP setup for Workstream frontend work.
+# This file is intended for trusted local Codex sessions opened from this repo.
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@latest"]
+startup_timeout_sec = 30
+tool_timeout_sec = 180
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
+startup_timeout_sec = 30
+tool_timeout_sec = 180
+
+# Prefer the installed GitHub Codex plugin when available. Enable this server
+# only if a local GITHUB_PERSONAL_ACCESS_TOKEN or GITHUB_TOKEN is available.
+[mcp_servers.github]
+command = "docker"
+args = ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"]
+env_vars = ["GITHUB_PERSONAL_ACCESS_TOKEN", "GITHUB_TOKEN"]
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+enabled = false
